@@ -13,9 +13,8 @@ number_labels = [tk.Label(text="0") for _ in range(3)]
 for number_label in number_labels:
     number_label.pack(padx=5, pady=5)
 
+
 # Generate 3 random numbers, check if all of them are equal and log them in a csv.
-
-
 def shoot():
     generated_numbers = []
 
