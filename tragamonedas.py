@@ -32,9 +32,9 @@ def shoot():
     # Check whether the user won or not, and update the message label.
     # All the generated numbers must be equal in order for the user to win.
     if all(x == generated_numbers[0] for x in generated_numbers):
-        message.config(text="Usted gano!", bg="lightgreen")
+        message.config(text="¡Usted gano!", bg="lightgreen")
     else:
-        message.config(text="Siga participando!", bg="lightblue")
+        message.config(text="¡Siga participando!", bg="lightblue")
 
     # Append shoot to shoots.csv.
     with open('shoots.csv', mode='a') as shoots_file:
