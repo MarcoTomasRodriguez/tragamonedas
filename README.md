@@ -21,7 +21,7 @@ Cada tiro, deberá almacenarse en un archivo en formato [CSV](https://es.wikiped
 
 1. Clonar el repositorio.
 2. Abrir una terminal en el directorio raíz del repositorio.
-3. Ejecutar `python3 tragamonedas.py` o `python tragamonedas.py` (en caso de tener Python 3 instalado por defecto).
+3. Ejecutar `python3 src/tragamonedas.py` o `python src/tragamonedas.py` (en caso de tener Python 3 instalado por defecto).
 
 ## Manual de Uso
 
