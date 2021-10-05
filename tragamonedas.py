@@ -4,6 +4,7 @@ from random import randint
 import tkinter as tk
 import tkinter.messagebox
 
+
 class Application(tk.Frame):
     # Tkinter Widgets
     master: tk.Tk
@@ -23,14 +24,15 @@ class Application(tk.Frame):
         self.configure()
         self.create_widgets()
         self.pack()
-    
+
     # Configure tkinter master.
     def configure(self):
         self.master.title("Tragamonedas")
 
         menu_bar = tk.Menu(self.master)
         help_menu = tk.Menu(self.master, tearoff=0)
-        help_menu.add_command(label="Manual de Usuario", command=self.redirect_to_help)
+        help_menu.add_command(label="Manual de Usuario",
+                              command=self.redirect_to_help)
         help_menu.add_command(label="Acerca de", command=self.show_about)
         menu_bar.add_cascade(label="Ayuda", menu=help_menu)
         self.master.config(menu=menu_bar)
@@ -66,7 +68,7 @@ class Application(tk.Frame):
         # Initialize numbers.
         self.numbers_label = tk.Label(text="0   0   0", font=("Arial", 12))
         self.numbers_label.pack(padx=5, pady=5)
-        
+
         # Initialize shoot button & bind "Click" event to shoot.
         shoot_button = tk.Button(text="Tirar", command=self.shoot)
         shoot_button.pack()
@@ -88,7 +90,7 @@ class Application(tk.Frame):
             self.message.config(text=text, bg=color_dict[type])
         elif type == "error":
             tk.messagebox.showerror("Error", text)
-    
+
     # Redirect to help website.
     # Caller: help_menu on "Manual de Usuario" click.
     def redirect_to_help(self) -> None:
@@ -97,17 +99,19 @@ class Application(tk.Frame):
     # Show about.
     # Caller: help_menu on "Acerca de" click.
     def show_about(self) -> None:
-        tk.messagebox.showinfo("Acerca de", "Trabajo realizado por Alejo Scarlato y Marco Rodriguez")
+        tk.messagebox.showinfo(
+            "Acerca de", "Trabajo realizado por Alejo Scarlato y Marco Rodriguez")
 
     # Deposit a balance.
     # Caller: deposit_button on click.
     def deposit(self) -> None:
         # Get deposited balance.
         deposited_balance = self.balance_var.get()
-        
+
         # Check if deposited balance is lower than 0. If so, show an error message.
         if deposited_balance < 0:
-            self.show_message("No puede depositar un valor inferior a 0.", "error")
+            self.show_message(
+                "No puede depositar un valor inferior a 0.", "error")
             return
 
         # Update balance & set deposited balance to 0.
