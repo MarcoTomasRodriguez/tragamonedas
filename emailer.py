@@ -1,5 +1,4 @@
-from typing import List
-import smtplib, ssl
+import smtplib, ssl, csv
 from getpass import getpass
 from dataclasses import dataclass
 from datetime import date
@@ -13,15 +12,6 @@ class Receiver:
     first_name: str
     last_name: str
     email: str
-
-receivers: List[str] = [Receiver(first_name="Alejo", last_name="Scarlato", email="a.alejo.scarlato@schonthal.esc.edu.ar")]
-
-port = 465  # SSL Port
-email = input("Ingrese su email: ")
-password = getpass("Ingrese su contraseña: ")
-
-# Create a secure SSL context
-context = ssl.create_default_context()
 
 def generate_report(receiver: Receiver) -> MIMEMultipart:
     report = MIMEMultipart()
@@ -42,15 +32,22 @@ Fecha de Emisión: {date.today().strftime("%d/%m/%Y")}
 """
     ))
 
-    pdf = MIMEApplication(open("report.pdf", "rb").read())
+    pdf = MIMEApplication(open("data/analytics.pdf", "rb").read())
     pdf.add_header("Content-Disposition", "attachment", filename="Reporte.pdf")
     report.attach(pdf)
 
     return report
 
-
-with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+with smtplib.SMTP_SSL("smtp.gmail.com", port=465, context=ssl.create_default_context()) as server:
+    email = input("Ingrese su email: ")
+    password = getpass("Ingrese su contraseña: ")
     server.login(email, password)
 
+    receivers = []
+    with open('data/receivers.csv', mode="r") as csv_file:
+        for row in csv.reader(csv_file, delimiter=','):
+            receivers.append(Receiver(row[0], row[1], row[2]))
+
     for receiver in receivers:
+        print(f"Enviando reporte a {receiver.email}...")
         server.sendmail(email, receiver.email, generate_report(receiver).as_string())
